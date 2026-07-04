@@ -1,0 +1,161 @@
+CREATE TABLE test_user (
+	id SERIAL NOT NULL PRIMARY KEY,
+	email VARCHAR(120) UNIQUE NOT NULL,
+	firstName VARCHAR(50) NOT NULL,
+	lastName VARCHAR(50),
+	contact VARCHAR(15),
+	accounts TEXT[],
+	password TEXT,
+	provider VARCHAR(10) NULL,
+	country TEXT,
+	currency VARCHAR(5) NOT NULL DEFAULT 'USD',
+	createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+
+
+
+
+
+
+
+INSERT INTO test_user (
+    email,
+    firstName,
+    lastName,
+    contact,
+    accounts,
+    password,
+    provider,
+    country,
+    currency
+)
+VALUES
+(
+    'john.doe@example.com',
+    'John',
+    'Doe',
+    '9876543210',
+    ARRAY['ACC1001', 'ACC1002'],
+    'hashed_password_1',
+    'LOCAL',
+    'USA',
+    'USD'
+),
+(
+    'jane.smith@example.com',
+    'Jane',
+    'Smith',
+    '9876543211',
+    ARRAY['ACC1003'],
+    'hashed_password_2',
+    'GOOGLE',
+    'Canada',
+    'CAD'
+),
+(
+    'alex.brown@example.com',
+    'Alex',
+    'Brown',
+    '9876543212',
+    ARRAY['ACC1004', 'ACC1005'],
+    'hashed_password_3',
+    'LOCAL',
+    'UK',
+    'GBP'
+),
+(
+    'emma.wilson@example.com',
+    'Emma',
+    'Wilson',
+    '9876543213',
+    ARRAY['ACC1006'],
+    'hashed_password_4',
+    'GITHUB',
+    'Australia',
+    'AUD'
+),
+(
+    'liam.jones@example.com',
+    'Liam',
+    'Jones',
+    '9876543214',
+    ARRAY['ACC1007', 'ACC1008', 'ACC1009'],
+    'hashed_password_5',
+    'LOCAL',
+    'India',
+    'INR'
+),
+(
+    'olivia.taylor@example.com',
+    'Olivia',
+    'Taylor',
+    '9876543215',
+    ARRAY['ACC1010'],
+    'hashed_password_6',
+    'GOOGLE',
+    'Germany',
+    'EUR'
+),
+(
+    'noah.martin@example.com',
+    'Noah',
+    'Martin',
+    '9876543216',
+    ARRAY['ACC1011', 'ACC1012'],
+    'hashed_password_7',
+    'LOCAL',
+    'France',
+    'EUR'
+),
+(
+    'ava.thomas@example.com',
+    'Ava',
+    'Thomas',
+    '9876543217',
+    ARRAY['ACC1013'],
+    'hashed_password_8',
+    'FACEBOOK',
+    'Brazil',
+    'BRL'
+),
+(
+    'william.moore@example.com',
+    'William',
+    'Moore',
+    '9876543218',
+    ARRAY['ACC1014', 'ACC1015'],
+    'hashed_password_9',
+    'LOCAL',
+    'Japan',
+    'JPY'
+),
+(
+    'sophia.jackson@example.com',
+    'Sophia',
+    'Jackson',
+    '9876543219',
+    ARRAY['ACC1016'],
+    'hashed_password_10',
+    'APPLE',
+    'Singapore',
+    'SGD'
+);
+
+
+
+
+{
+    "email": "anujbhaladhare@example.com",
+    "firstName": "anuj",
+    "lastName": "bhaladhare",
+    "contact": "9876543218",
+    "accounts": ARRAY['ACC1014', 'ACC1015'],
+    "password": "hashed_password_9",
+    "provider": "LOCAL",
+    "country": "Japan",
+    "currency": "JP"
+}
