@@ -8,9 +8,9 @@ const {
     deleteUserController
 } = require("./../controllers/userController")
 
-router.post("/create", createUserController);       // Not Working
+router.post("/create", createUserController);       // Working Properlly
 router.get("/get", getUserController);              // Working Properlly
-router.put("/update", updateUserController);        // Not Working
-router.delete("/delete", deleteUserController);     // Not Working
+router.put("/update/:id", updateUserController);        // Not Working
+router.delete("/delete/:id", deleteUserController);     // Working Properlly
 
 module.exports = router;

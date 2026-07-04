@@ -105,8 +105,35 @@ const getUserController = async (req, res) => {
 }
 
 const updateUserController = async (req, res) => {
+
     try {
-        console.log("updateUserController");
+        
+        const {
+            firstName, lastName, contact, accounts, provider, country, currency
+        } = req.body;
+
+        const { id } = req.params;
+
+        if (!id || !firstName || !lastName || !contact || !accounts || !provider || !country || !currency) {
+            return res.status(404).json({
+                "success": false,
+                "message": "Please provide proper data || data is not present properlly",
+            });
+        }
+
+        const update_db_result = await updateUserModel(id, firstName, lastName, contact, accounts, provider, country, currency);
+
+        if (update_db_result) {
+            return res.status(200).json({
+                "success": true,
+                "message": "User Update Successfully"
+            });
+        } else {
+            return res.status(400).json({
+                "success": false,
+                "message": "User Update Error"
+            });
+        }
 
     } catch (error) {
         return res.status(400).json({
@@ -119,7 +146,29 @@ const updateUserController = async (req, res) => {
 
 const deleteUserController = async (req, res) => {
     try {
-        console.log("deleteUserController");
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(404).json({
+                "success": false,
+                "message": "ID Not Present"
+            });
+        }
+
+        const delete_result = await deleteUserModel(id);
+
+        if (delete_result == 1) {
+            return res.status(200).json({
+                "success": true,
+                "message": "USER Deleted seccess"
+            });
+        } else {
+            return res.status(400).json({
+                "success": true,
+                "message": "USER Not Deleted"
+            });
+        }
+
     } catch (error) {
         return res.status(400).json({
             "success": false,

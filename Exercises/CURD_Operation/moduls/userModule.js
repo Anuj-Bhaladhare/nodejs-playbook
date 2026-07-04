@@ -60,31 +60,40 @@ const getUserModel = async (email) => {
     }
 }
 
-const updateUserModel = async (req, res) => {
+const updateUserModel = async (id, firstName, lastName, contact, accounts, provider, country, currency) => {
     try {
 
-        console.log("updateUserModel");
+        const db_result = await pool.query(
+            `
+                UPDATE test_user
+                SET firstName = $1, lastName = $2, contact = $3, accounts = $4, provider = $5, country = $6, currency = $7
+                WHERE id = $8;
+            `,
+            [firstName, lastName, contact, accounts, provider, country, currency, id]
+        );
+
+        return db_result ? db_result.rowCount : false;
 
     } catch (error) {
-        return res.status(400).json({
-            "success": false,
-            "message": "request fail",
-            "error": error
-        });
+        throw error;
     }
 }
 
-const deleteUserModel = async (req, res) => {
+const deleteUserModel = async (id) => {
     try {
 
-        console.log("deleteUserModel");
+        const db_result = await pool.query(
+            `
+                DELETE FROM test_user
+                WHERE id = $1;
+            `, 
+            [id]
+        );
+
+        return db_result.rowCount;
 
     } catch (error) {
-        return res.status(400).json({
-            "success": false,
-            "message": "request fail",
-            "error": error
-        });
+        throw error;
     }
 }
 
