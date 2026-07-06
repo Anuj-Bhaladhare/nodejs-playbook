@@ -1,0 +1,108 @@
+Database Name: social_media_db
+
+4 Table is Created:
+    i)  Users
+    ii) Posts
+    iii) post_likes
+    iv) comments
+
+
+1) Users: 
+CREATE TABLE users (
+    id              BIGSERIAL PRIMARY KEY,
+
+    username        VARCHAR(50) NOT NULL UNIQUE,
+    email           VARCHAR(255) NOT NULL UNIQUE,
+    password_hash   TEXT NOT NULL,
+
+    first_name      VARCHAR(100),
+    last_name       VARCHAR(100),
+
+    profile_image   TEXT,
+    bio             TEXT,
+
+    is_verified     BOOLEAN DEFAULT FALSE,
+    is_active       BOOLEAN DEFAULT TRUE,
+
+    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+2) Posts: 
+CREATE TABLE posts (
+
+    id              BIGSERIAL PRIMARY KEY,
+
+    user_id         BIGINT NOT NULL,
+
+    caption         TEXT,
+
+    image_url       TEXT,
+    video_url       TEXT,
+
+    visibility      VARCHAR(20) DEFAULT 'PUBLIC',
+
+    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_post_user
+        FOREIGN KEY(user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
+
+3) post_likes: 
+CREATE TABLE post_likes (
+
+    id              BIGSERIAL PRIMARY KEY,
+
+    post_id         BIGINT NOT NULL,
+
+    user_id         BIGINT NOT NULL,
+
+    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_like_post
+        FOREIGN KEY(post_id)
+        REFERENCES posts(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_like_user
+        FOREIGN KEY(user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT unique_post_like
+        UNIQUE(user_id, post_id)
+
+);
+
+
+4) comments: 
+CREATE TABLE comments (
+
+    id              BIGSERIAL PRIMARY KEY,
+
+    post_id         BIGINT NOT NULL,
+
+    user_id         BIGINT NOT NULL,
+
+    comment         TEXT NOT NULL,
+
+    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_comment_post
+        FOREIGN KEY(post_id)
+        REFERENCES posts(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_comment_user
+        FOREIGN KEY(user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
