@@ -2,6 +2,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const router = require("./routes/fileUpload.js")
 const expressFileupload = require("express-fileupload");
+
 require("dotenv").config();
 
 // define variable
@@ -11,7 +12,14 @@ const PORT = process.env.PORT || 5001
 // configur parser
 app.use(express.json());        // JSON Parser
 app.use(cookieParser());        // Cookie Parser
-app.use(expressFileupload());   // Used for File Upload
+app.use(expressFileupload({
+    useTempFiles : true,
+    tempFileDir : '/tmp/'
+}));                            // Used for File Upload
+
+//cloud se connect krna h 
+const cloudinary = require("./config/cloudinary");
+cloudinary.cloudinaryConnect();
 
 // Setup Routers
 app.get("/", (req, res) => {
